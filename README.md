@@ -26,22 +26,13 @@ Standalone JS is not currently published.
 Instantiate the scarab in JavaScript:
 
 ```js
-MPZN.scarab();
-
-// Or, for legacy:
-MPZN.bug();
-```
-
-You could also assign it to a variable for later use programmatically:
-
-```js
-var mzScarab = new MPZN.scarab();
+var scarab = new MapzenScarab();
 ```
 
 The scarab works without any additional configuration, but you can customize its behavior with by passing in an object like so:
 
 ```js
-var mzScarab = new MPZN.scarab({
+var scarab = new MapzenScarab({
   name: 'Tangram',
   link: 'https://mapzen.com/projects/',
   tweet: 'Wow, what a cool WebGL map renderer by @mapzen!',
@@ -121,20 +112,4 @@ Other sharing options are not currently planned.
 
 ## Building
 
-Install `npm` and dependencies, then:
-
-```
-npm install
-```
-
-You may also need to install gulp globally:
-
-```
-npm install gulp -g
-```
-
-Then, each time you want to build everything:
-
-```shell
-gulp          # Files are generated in dist/
-```
+There is no build process for this. Please import and conduct minification etc. downstream.
