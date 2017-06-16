@@ -1,5 +1,29 @@
 @charset 'utf-8';
 
+/* pop up box for info button */
+
+#description {
+  display: none;
+  box-sizing: border-box;
+  width: 338px;
+  
+
+  background-color: rgba(255,255,255,0.90);
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.20);
+  text-align: center;
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  margin-left: -144px;
+  z-index: 900;
+
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 0px black;
+}
+
+/* end of pop up box styling */
+
 .mz-bug-container,
 .mz-bug-container * {
   box-sizing: content-box;
@@ -23,6 +47,11 @@
 @media only screen and (max-width: 400px) {
   .mz-bug-container {
     width: 192px;
+    margin-left: -96px;
+  }
+  
+   #description {
+    width: 240px;
     margin-left: -96px;
   }
 }
@@ -63,6 +92,40 @@
   height: 100%;
   margin-top: -1px;
 }
+
+/* adding info logo and info link */
+
+.mz-bug-info{
+  width: 48px;
+  height: 48px;
+
+  position: absolute;
+  left: 288px;
+ 
+  border-left: 1px solid rgba(0,0,0,0.10);
+}
+
+.mz-bug-info-logo {
+  background-image: url(http://png-1.vector.me/files/images/3/9/394040/universal_information_symbol_thumb);
+  background-position: center center;
+  background-size: 50%;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  height: 100%;
+  margin-top: -1px;
+  margin-left: -1px;
+
+}
+
+.mz-bug-info:hover,
+.mz-bug-info:active {
+  background: white;
+  box-shadow: inset 0 -4px 0 #444;
+  cursor: pointer;
+}
+
+/* ending info logo and link styling */
 
 @media only screen and (max-width: 400px) {
   .mz-bug-mapzen-link {
@@ -161,5 +224,9 @@
 
   .mz-bug-github-link {
     left: 144px;
+  }
+  
+  .mz-bug-info {
+    left: 192px;
   }
 }
