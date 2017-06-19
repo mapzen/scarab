@@ -171,6 +171,7 @@ var MapzenScarab = (function () {
   function _onClickGitHub (event) {
     _track('click', 'github', opts.name)
   }
+  
   // Clicking info button should lead to pop up description to open up
   // Clicking info button again should lead to description box closing
   // If no description provided, do not open description box
@@ -185,15 +186,19 @@ var MapzenScarab = (function () {
   }
 
   function _buildDescription() {
-    var elem = document.getElementById('description')
-    elem.innerHTML = opts.description 
+    var infoBox = document.createElement('div')
+    infoBox.id = "description"
+    infoBox.innerHTML = opts.description 
+    document.body.appendChild(infoBox)
   }
   
   // Changing container size for responsive design
   function responsiveContainer(mq) {
     if (mq.matches) { 
+      //if window size is less than 400px
       document.getElementById('mz-bug').style.width = '240px' 
     } else { 
+      //if window size is greater than 400px
       document.getElementById('mz-bug').style.width = '338px' 
     }
   }
