@@ -2,7 +2,7 @@
 
 /* pop up box for info button */
 
-#description {
+.mz-bug-description {
   display: none;
   box-sizing: border-box;
   width: 338px;
@@ -50,7 +50,7 @@
     margin-left: -96px;
   }
   
-  #description {
+  .mz-bug-description {
     width: 240px;
     margin-left: -96px;
   }
