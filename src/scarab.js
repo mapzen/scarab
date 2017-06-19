@@ -177,7 +177,7 @@ var MapzenScarab = (function () {
   // If no description provided, do not open description box
 
   function _onClickInfo(event) {
-    var elem = document.getElementById('description')
+    var elem = document.querySelector('.mz-bug-description')
     if (elem.style.display === 'none') {
         elem.style.display = 'block'
     } else {
@@ -185,9 +185,9 @@ var MapzenScarab = (function () {
     }
   }
 
-  function _buildDescription() {
+  function _buildDescription(id) {
     var infoBox = document.createElement('div')
-    infoBox.id = "description"
+    infoBox.className = 'mz-bug-' + id
     infoBox.innerHTML = opts.description 
     document.body.appendChild(infoBox)
   }
