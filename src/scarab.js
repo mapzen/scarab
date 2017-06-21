@@ -127,6 +127,7 @@ var MapzenScarab = (function () {
     var infoButton = document.createElement('div')
     var infoLogo = document.createElement('div')
     infoLogo.className = 'mz-bug-' + id + '-logo'
+    infoLogo.className = 'fa fa-info-circle fa-lg'
     infoLogo.addEventListener('click', clickHandler)
     infoButton.className = 'mz-bug-' + id
 
@@ -189,18 +190,16 @@ var MapzenScarab = (function () {
     var infoBox = document.createElement('div')
     infoBox.className = 'mz-bug-' + id
     infoBox.innerHTML = opts.description 
+    infoBox.style.width = document.getElementById('mz-bug').style.width
     document.body.appendChild(infoBox)
   }
   
-  // Changing container size for responsive design
-  function responsiveContainer(mq) {
-    if (mq.matches) { 
-      //if window size is less than 400px
-      document.getElementById('mz-bug').style.width = '240px' 
-    } else { 
-      //if window size is greater than 400px
-      document.getElementById('mz-bug').style.width = '338px' 
-    }
+  // Changes 'mz-bug-container' width if info description included 
+  function containerWidth() {
+    var container = document.getElementById('mz-bug')
+    var currWidth = container.offsetWidth
+    var newWidth = currWidth + 48
+    container.style.width = newWidth + 'px'
   }
 
   var MapzenScarab = function (options) {
@@ -229,11 +228,9 @@ var MapzenScarab = (function () {
     
     // If description provided, container needs to be resized to fit info button 
     // If description not provided, info button not provided so no need to resize
-    // also include responsive design 
     var mq = window.matchMedia("only screen and (max-width: 400px)")
     if (opts.description) { 
-      mq.addListener(responsiveContainer)
-      responsiveContainer(mq)
+      containerWidth()
       _buildDescription()
     }
     
