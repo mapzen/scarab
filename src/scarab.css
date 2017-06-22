@@ -5,8 +5,6 @@
 .mz-bug-description {
   display: none;
   box-sizing: border-box;
-  width: 338px;
-  
 
   background-color: rgba(255,255,255,0.90);
   box-shadow: 0 0 10px 1px rgba(0,0,0,0.20);
@@ -33,8 +31,7 @@
   position: absolute;
   top: 0;
   left: 50%;
-  margin-left: -144px;
-  width: 288px;
+  margin-left: -192px;
   height: 48px;
   background-color: rgba(255,255,255,0.90);
   box-shadow: 0 0 10px 1px rgba(0,0,0,0.20);
@@ -46,20 +43,16 @@
 
 @media only screen and (max-width: 400px) {
   .mz-bug-container {
-    width: 192px;
     margin-left: -96px;
   }
   
   .mz-bug-description {
-    width: 240px;
     margin-left: -96px;
   }
 }
 
-.mz-bug-container a {
-  display: block;
-  position: absolute;
-  top: 0;
+.mz-bug-icons {
+  float: left;
   height: 100%;
 
   -webkit-transition: box-shadow 160ms ease-in-out, background-color 160ms linear;
@@ -74,7 +67,6 @@
 
 .mz-bug-mapzen-link {
   display: block;
-  left: 0;
   width: 144px;
 }
 
@@ -112,7 +104,6 @@
 .mz-bug-twitter-link {
   width: 48px;
   height: 48px;
-  left: 144px;
   border-left: 1px solid rgba(0,0,0,0.10);
 }
 
@@ -135,7 +126,6 @@
 .mz-bug-facebook-link {
   width: 48px;
   height: 48px;
-  left: 192px;
   border-left: 1px solid rgba(0,0,0,0.10);
 }
 
@@ -158,7 +148,6 @@
 .mz-bug-github-link {
   width: 48px;
   height: 48px;
-  left: 240px;
   border-left: 1px solid rgba(0,0,0,0.10);
 }
 
@@ -184,19 +173,19 @@
 .mz-bug-info{
   width: 48px;
   height: 48px;
-
-  position: absolute;
-  left: 288px;
  
   border-left: 1px solid rgba(0,0,0,0.10);
 }
 
-.fa-info-circle {
-  border: solid 0px black;
-  text-align: center;
+.mz-bug-info-logo {
+  background-image: url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3C%21--%20Generator%3A%20Adobe%20Illustrator%2016.0.4%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200%29%20%20--%3E%0D%0A%3C%21DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20width%3D%2248.004px%22%20height%3D%2248px%22%20viewBox%3D%220%200%2048.004%2048%22%20enable-background%3D%22new%200%200%2048.004%2048%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Ccircle%20fill%3D%22%231F1034%22%20cx%3D%2224.002%22%20cy%3D%2224%22%20r%3D%2223%22%2F%3E%0D%0A%3Cg%3E%0D%0A%09%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M26.419%2C16.356c-0.657%2C0.658-1.464%2C0.987-2.417%2C0.987c-0.954%2C0-1.76-0.329-2.418-0.987%0D%0A%09%09c-0.659-0.659-0.987-1.47-0.987-2.436c0-0.965%2C0.328-1.775%2C0.987-2.435c0.658-0.658%2C1.464-0.986%2C2.418-0.986%0D%0A%09%09c0.953%2C0%2C1.76%2C0.328%2C2.417%2C0.986c0.659%2C0.659%2C0.988%2C1.47%2C0.988%2C2.435C27.407%2C14.887%2C27.078%2C15.697%2C26.419%2C16.356z%20M21.107%2C37.5%0D%0A%09%09V18.501h5.822V37.5H21.107z%22%2F%3E%0D%0A%3C%2Fg%3E%0D%0A%3C%2Fsvg%3E%0D%0A);
+  background-position: center center;
+  background-size: 45%;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  padding-top: 15px;
+  margin-top: -1px;
+  margin-left: -1px;
 }
 
 .mz-bug-info:hover,
@@ -206,21 +195,3 @@
   cursor: pointer;
 }
 /* ending info logo and link styling */
-
-@media only screen and (max-width: 400px) {
-  .mz-bug-twitter-link {
-    left: 48px;
-  }
-
-  .mz-bug-facebook-link {
-    left: 96px;
-  }
-
-  .mz-bug-github-link {
-    left: 144px;
-  }
-  
-  .mz-bug-info {
-    left: 192px;
-  }
-}
