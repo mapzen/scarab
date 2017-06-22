@@ -22,6 +22,7 @@ var MapzenScarab = (function () {
     // opts.tweet     prewritten tweet
     // opts.analytics track?
     // opts.repo      Link to GitHub repository
+    // opts.description Information about map 
 
   function _track (action, label, value, nonInteraction) {
     if (opts.analytics === false) return false
@@ -105,7 +106,13 @@ var MapzenScarab = (function () {
     var twitterEl = _createButtonEl('twitter', _buildTwitterLink(), 'Share this on Twitter', _onClickTwitter)
     var facebookEl = _createButtonEl('facebook', _buildFacebookLink(), 'Share this on Facebook', _onClickFacebook)
     var githubEl = _createButtonEl('github', githubLink, 'View source on GitHub', _onClickGitHub)
-
+    
+    //Creating info button and adding to container only if description is provided
+    if (opts.description) {
+      var infoEl = _createInfoButton('info', _onClickInfo)
+      el.appendChild(infoEl);
+    }
+    
     // Build DOM
     el.appendChild(mapzenEl)
     el.appendChild(twitterEl)
@@ -115,7 +122,20 @@ var MapzenScarab = (function () {
 
     return el
   }
+  
+  function _createInfoButton(id, clickHandler) {
+    var infoButton = document.createElement('div')
+    var infoLogo = document.createElement('div')
+    infoLogo.className = 'mz-bug-' + id + '-logo'
+    infoLogo.className = 'fa fa-info-circle fa-lg'
+    infoLogo.addEventListener('click', clickHandler)
+    infoButton.className = 'mz-bug-' + id
 
+    infoButton.appendChild(infoLogo)
+
+    return infoButton
+  }
+  
   function _createButtonEl (id, linkHref, linkTitle, clickHandler) {
     var linkEl = document.createElement('a')
     var logoEl = document.createElement('div')
@@ -152,6 +172,35 @@ var MapzenScarab = (function () {
   function _onClickGitHub (event) {
     _track('click', 'github', opts.name)
   }
+  
+  // Clicking info button should lead to pop up description to open up
+  // Clicking info button again should lead to description box closing
+  // If no description provided, do not open description box
+
+  function _onClickInfo(event) {
+    var elem = document.querySelector('.mz-bug-description')
+    if (elem.style.display === 'none') {
+        elem.style.display = 'block'
+    } else {
+        elem.style.display = 'none'
+    }
+  }
+
+  function _buildDescription(id) {
+    var infoBox = document.createElement('div')
+    infoBox.className = 'mz-bug-' + id
+    infoBox.innerHTML = opts.description 
+    infoBox.style.width = document.getElementById('mz-bug').style.width
+    document.body.appendChild(infoBox)
+  }
+  
+  // Changes 'mz-bug-container' width if info description included 
+  function containerWidth() {
+    var container = document.getElementById('mz-bug')
+    var currWidth = container.offsetWidth
+    var newWidth = currWidth + 48
+    container.style.width = newWidth + 'px'
+  }
 
   var MapzenScarab = function (options) {
     // nifty JS constructor pattern via browserify documentation
@@ -176,7 +225,15 @@ var MapzenScarab = (function () {
     window.onhashchange = function () {
       this.rebuildLinks()
     }.bind(this)
-
+    
+    // If description provided, container needs to be resized to fit info button 
+    // If description not provided, info button not provided so no need to resize
+    var mq = window.matchMedia("only screen and (max-width: 400px)")
+    if (opts.description) { 
+      containerWidth()
+      _buildDescription()
+    }
+    
     // Check if Google Analytics is present soon in the future; if not, load it.
     window.setTimeout(function () {
       if (typeof ga === 'undefined') {
