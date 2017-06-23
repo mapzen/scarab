@@ -48,6 +48,7 @@
   
   .mz-bug-description {
     margin-left: -96px;
+  }
 }
 
 .mz-bug-icons {
@@ -169,10 +170,9 @@
 
 /* adding info logo and info link */
 
-.mz-bug-info{
+.mz-bug-info {
   width: 48px;
   height: 48px;
-
   border-left: 1px solid rgba(0,0,0,0.10);
 }
 
