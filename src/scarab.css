@@ -12,7 +12,6 @@
   position: absolute;
   top: 75px;
   left: 50%;
-  margin-left: -192px;
   z-index: 900;
 
   padding: 10px;
@@ -31,7 +30,6 @@
   position: absolute;
   top: 0;
   left: 50%;
-  margin-left: -192px;
   height: 48px;
   background-color: rgba(255,255,255,0.90);
   box-shadow: 0 0 10px 1px rgba(0,0,0,0.20);
@@ -39,16 +37,6 @@
   z-index: 900;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-
-@media only screen and (max-width: 400px) {
-  .mz-bug-container {
-    margin-left: -96px;
-  }
-  
-  .mz-bug-description {
-    margin-left: -96px;
-  }
 }
 
 .mz-bug-icons {
