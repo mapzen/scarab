@@ -11,7 +11,6 @@ var MapzenScarab = (function () {
   'use strict'
 
   var DEFAULT_LINK = 'https://mapzen.com/'
-  var DEFAULT_GITHUB_LINK = 'https://github.com/mapzen/'
   var TRACKING_CATEGORY = 'demo'
   var ANALYTICS_PROPERTY_ID = 'UA-47035811-1'
 
@@ -22,6 +21,7 @@ var MapzenScarab = (function () {
     // opts.tweet     prewritten tweet
     // opts.analytics track?
     // opts.repo      Link to GitHub repository
+    // opts.description Information about map
 
   function _track (action, label, value, nonInteraction) {
     if (opts.analytics === false) return false
@@ -92,7 +92,6 @@ var MapzenScarab = (function () {
   function _createElsAndAppend () {
     var mapzenLink = opts.link || DEFAULT_LINK
     var mapzenTitle = (opts.name) ? opts.name + ' · Powered by Mapzen' : 'Powered by Mapzen'
-    var githubLink = opts.repo 
     var el = document.createElement('div')
 
     // Create container
@@ -104,7 +103,6 @@ var MapzenScarab = (function () {
     var mapzenEl = _createButtonEl('mapzen', mapzenLink, mapzenTitle, _onClickMapzen)
     var twitterEl = _createButtonEl('twitter', _buildTwitterLink(), 'Share this on Twitter', _onClickTwitter)
     var facebookEl = _createButtonEl('facebook', _buildFacebookLink(), 'Share this on Facebook', _onClickFacebook)
-    var githubEl = _createButtonEl('github', githubLink, 'View source on GitHub', _onClickGitHub)
 
     // Build DOM
     el.appendChild(mapzenEl)
@@ -113,7 +111,7 @@ var MapzenScarab = (function () {
     
     // Creating github icon button if needed
     if (opts.repo) {
-      var githubEl = _createButtonEl('github', githubLink, 'View source on GitHub', _onClickGitHub)
+      var githubEl = _createButtonEl('github', opts.repo, 'View source on GitHub', _onClickGitHub)
       el.appendChild(githubEl)
     }
 
@@ -134,10 +132,9 @@ var MapzenScarab = (function () {
     infoLogo.className = 'mz-bug-' + id + '-logo'
     infoLogo.addEventListener('click', clickHandler)
     infoButton.className = 'mz-bug-' + id
-    infoButton.classList.add('mz-bug-icons')
+    infoButton.className += ' mz-bug-icons'
 
     infoButton.appendChild(infoLogo)
-
     return infoButton
   }
 
@@ -149,7 +146,7 @@ var MapzenScarab = (function () {
     linkEl.href = linkHref
     linkEl.target = '_blank'
     linkEl.className = 'mz-bug-' + id + '-link'
-    linkEl.classList.add('mz-bug-icons')
+    linkEl.className += ' mz-bug-icons'
     linkEl.title = linkTitle
     linkEl.addEventListener('click', clickHandler)
 
@@ -194,7 +191,7 @@ var MapzenScarab = (function () {
   function _buildDescription(id) {
     var infoBox = document.createElement('div')
     infoBox.className = "mz-bug-" + id
-    infoBox.innerHTML = opts.description 
+    infoBox.textContent = opts.description 
     infoBox.style.width = document.getElementById('mz-bug').offsetWidth + 'px'
     document.body.appendChild(infoBox)
   }
@@ -223,7 +220,6 @@ var MapzenScarab = (function () {
 
     // Build links
     this.rebuildLinks()
-    
     // Rebuild links if hash changes
     window.onhashchange = function () {
       this.rebuildLinks()
