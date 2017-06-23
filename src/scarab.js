@@ -200,6 +200,13 @@ var MapzenScarab = (function () {
     var containerWidth = document.querySelector('.mz-bug-container').offsetWidth 
     var descriptionBox = document.querySelector('.mz-bug-description')
     descriptionBox.style.width = containerWidth + 'px'
+    descriptionBox.style.marginLeft = document.querySelector('.mz-bug-container').style.marginLeft
+  }
+  
+  function centerScarab() {
+    var containerWidth = document.getElementById('mz-bug').offsetWidth
+    var offsetMargin = -1 * containerWidth / 2
+    document.getElementById('mz-bug').style.marginLeft = offsetMargin + 'px'
   }
   
   var MapzenScarab = function (options) {
@@ -217,7 +224,10 @@ var MapzenScarab = (function () {
     this.el = _createElsAndAppend()
     this.twitterEl = this.el.querySelector('.mz-bug-twitter-link')
     this.facebookEl = this.el.querySelector('.mz-bug-facebook-link')
-
+    
+    centerScarab();
+    window.addEventListener('resize', centerScarab)
+    
     // Build links
     this.rebuildLinks()
     // Rebuild links if hash changes
