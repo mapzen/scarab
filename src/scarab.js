@@ -22,7 +22,9 @@ var MapzenScarab = (function () {
     // opts.analytics track?
     // opts.repo      Link to GitHub repository
     // opts.description Information about map
-
+  
+  var infoDescription
+  
   function _track (action, label, value, nonInteraction) {
     if (opts.analytics === false) return false
 
@@ -180,7 +182,7 @@ var MapzenScarab = (function () {
   // Clicking info button again should lead to description box closing
   // If no description provided, do not open description box
   function _onClickInfo(event) {
-    var elem = document.querySelector(".mz-bug-description")
+    var elem = infoDescription
     if (elem.style.display === 'none') {
         elem.style.display = 'block'
     } else {
@@ -194,13 +196,14 @@ var MapzenScarab = (function () {
     infoBox.textContent = opts.description 
     infoBox.style.width = document.getElementById('mz-bug').offsetWidth + 'px'
     document.body.appendChild(infoBox)
+    
+    return infoBox
   }
 
   function resizeDescription() {
-    var containerWidth = document.querySelector('.mz-bug-container').offsetWidth 
-    var descriptionBox = document.querySelector('.mz-bug-description')
-    descriptionBox.style.width = containerWidth + 'px'
-    descriptionBox.style.marginLeft = document.querySelector('.mz-bug-container').style.marginLeft
+    var containerWidth = document.getElementById('mz-bug').offsetWidth 
+    infoDescription.style.width = containerWidth + 'px'
+    infoDescription.style.marginLeft = document.getElementById('mz-bug').style.marginLeft
   }
   
   function centerScarab() {
@@ -236,8 +239,8 @@ var MapzenScarab = (function () {
     }.bind(this)
     
     if (opts.description) {
-      _buildDescription('description')
-       window.addEventListener('resize', resizeDescription)
+      infoDescription = _buildDescription('description')
+      window.addEventListener('resize', resizeDescription)
     }
     
     // Check if Google Analytics is present soon in the future; if not, load it.
