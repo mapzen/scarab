@@ -23,7 +23,7 @@ var MapzenScarab = (function () {
     // opts.repo      Link to GitHub repository
     // opts.description Information about map
   
-  var infoDescription
+  var infoDescriptionEl
   
   function _track (action, label, value, nonInteraction) {
     if (opts.analytics === false) return false
@@ -124,7 +124,6 @@ var MapzenScarab = (function () {
     }
     
     document.body.appendChild(el)
-
     return el
   }
   
@@ -182,7 +181,7 @@ var MapzenScarab = (function () {
   // Clicking info button again should lead to description box closing
   // If no description provided, do not open description box
   function _onClickInfo(event) {
-    var elem = infoDescription
+    var elem = infoDescriptionEl
     if (elem.style.display === 'none') {
         elem.style.display = 'block'
     } else {
@@ -190,26 +189,27 @@ var MapzenScarab = (function () {
     }
   }
 
-  function _buildDescription(id) {
+  function _buildDescription(id, container) {
     var infoBox = document.createElement('div')
     infoBox.className = "mz-bug-" + id
     infoBox.textContent = opts.description 
-    infoBox.style.width = document.getElementById('mz-bug').offsetWidth + 'px'
-    document.body.appendChild(infoBox)
+    infoBox.style.width = container.offsetWidth + 'px'
+    infoBox.style.marginLeft = container.style.marginLeft
     
+    document.body.appendChild(infoBox)
     return infoBox
   }
 
-  function resizeDescription() {
-    var containerWidth = document.getElementById('mz-bug').offsetWidth 
-    infoDescription.style.width = containerWidth + 'px'
-    infoDescription.style.marginLeft = document.getElementById('mz-bug').style.marginLeft
+  function resizeDescription(container) {
+    var containerWidth = container.offsetWidth 
+    infoDescriptionEl.style.width = containerWidth + 'px'
+    infoDescriptionEl.style.marginLeft = container.style.marginLeft
   }
   
-  function centerScarab() {
-    var containerWidth = document.getElementById('mz-bug').offsetWidth
+  function centerScarab(container) {
+    var containerWidth = container.offsetWidth
     var offsetMargin = -1 * containerWidth / 2
-    document.getElementById('mz-bug').style.marginLeft = offsetMargin + 'px'
+    container.style.marginLeft = offsetMargin + 'px'
   }
   
   var MapzenScarab = function (options) {
@@ -228,8 +228,10 @@ var MapzenScarab = (function () {
     this.twitterEl = this.el.querySelector('.mz-bug-twitter-link')
     this.facebookEl = this.el.querySelector('.mz-bug-facebook-link')
     
-    centerScarab();
-    window.addEventListener('resize', centerScarab)
+    centerScarab(this.el);
+    window.addEventListener('resize', function(event) {
+      centerScarab(this.el)
+    }.bind(this))
     
     // Build links
     this.rebuildLinks()
@@ -239,8 +241,10 @@ var MapzenScarab = (function () {
     }.bind(this)
     
     if (opts.description) {
-      infoDescription = _buildDescription('description')
-      window.addEventListener('resize', resizeDescription)
+      infoDescriptionEl = _buildDescription('description', this.el)
+      window.addEventListener('resize', function(event) {
+        resizeDescription(this.el)
+      }.bind(this))
     }
     
     // Check if Google Analytics is present soon in the future; if not, load it.
