@@ -1,6 +1,6 @@
 {
   "name": "mapzen-scarab",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "mapzen maps & demo branding, social sharing, and tracking",
   "homepage": "https://github.com/mapzen/scarab",
   "private": true,
