@@ -11,7 +11,6 @@ var MapzenScarab = (function () {
   'use strict'
 
   var DEFAULT_LINK = 'https://mapzen.com/'
-  var DEFAULT_GITHUB_LINK = 'https://github.com/mapzen/'
   var TRACKING_CATEGORY = 'demo'
   var ANALYTICS_PROPERTY_ID = 'UA-47035811-1'
 
@@ -22,7 +21,10 @@ var MapzenScarab = (function () {
     // opts.tweet     prewritten tweet
     // opts.analytics track?
     // opts.repo      Link to GitHub repository
-
+    // opts.description Information about map
+  
+  var infoDescriptionEl
+  
   function _track (action, label, value, nonInteraction) {
     if (opts.analytics === false) return false
 
@@ -92,7 +94,6 @@ var MapzenScarab = (function () {
   function _createElsAndAppend () {
     var mapzenLink = opts.link || DEFAULT_LINK
     var mapzenTitle = (opts.name) ? opts.name + ' · Powered by Mapzen' : 'Powered by Mapzen'
-    var githubLink = opts.repo || DEFAULT_GITHUB_LINK
     var el = document.createElement('div')
 
     // Create container
@@ -104,16 +105,38 @@ var MapzenScarab = (function () {
     var mapzenEl = _createButtonEl('mapzen', mapzenLink, mapzenTitle, _onClickMapzen)
     var twitterEl = _createButtonEl('twitter', _buildTwitterLink(), 'Share this on Twitter', _onClickTwitter)
     var facebookEl = _createButtonEl('facebook', _buildFacebookLink(), 'Share this on Facebook', _onClickFacebook)
-    var githubEl = _createButtonEl('github', githubLink, 'View source on GitHub', _onClickGitHub)
 
     // Build DOM
     el.appendChild(mapzenEl)
     el.appendChild(twitterEl)
     el.appendChild(facebookEl)
-    el.appendChild(githubEl)
-    document.body.appendChild(el)
+    
+    // Creating github icon button if needed
+    if (opts.repo) {
+      var githubEl = _createButtonEl('github', opts.repo, 'View source on GitHub', _onClickGitHub)
+      el.appendChild(githubEl)
+    }
 
+    // Creating info button and adding to container only if description is provided
+    if (opts.description) {
+      var infoEl = _createInfoButton('info', _onClickInfo)
+      el.appendChild(infoEl)
+    }
+    
+    document.body.appendChild(el)
     return el
+  }
+  
+  function _createInfoButton(id, clickHandler) {
+    var infoButton = document.createElement('div')
+    var infoLogo = document.createElement('div')
+    infoLogo.className = 'mz-bug-' + id + '-logo'
+    infoLogo.addEventListener('click', clickHandler)
+    infoButton.className = 'mz-bug-' + id
+    infoButton.className += ' mz-bug-icons'
+
+    infoButton.appendChild(infoLogo)
+    return infoButton
   }
 
   function _createButtonEl (id, linkHref, linkTitle, clickHandler) {
@@ -124,6 +147,7 @@ var MapzenScarab = (function () {
     linkEl.href = linkHref
     linkEl.target = '_blank'
     linkEl.className = 'mz-bug-' + id + '-link'
+    linkEl.className += ' mz-bug-icons'
     linkEl.title = linkTitle
     linkEl.addEventListener('click', clickHandler)
 
@@ -152,7 +176,42 @@ var MapzenScarab = (function () {
   function _onClickGitHub (event) {
     _track('click', 'github', opts.name)
   }
+  
+  // Clicking info button should lead to pop up description to open up
+  // Clicking info button again should lead to description box closing
+  // If no description provided, do not open description box
+  function _onClickInfo(event) {
+    var elem = infoDescriptionEl
+    if (elem.style.display === 'none') {
+        elem.style.display = 'block'
+    } else {
+        elem.style.display = 'none'
+    }
+  }
 
+  function _buildDescription(id, container) {
+    var infoBox = document.createElement('div')
+    infoBox.className = "mz-bug-" + id
+    infoBox.textContent = opts.description 
+    infoBox.style.width = container.offsetWidth + 'px'
+    infoBox.style.marginLeft = container.style.marginLeft
+    
+    document.body.appendChild(infoBox)
+    return infoBox
+  }
+
+  function resizeDescription(container) {
+    var containerWidth = container.offsetWidth 
+    infoDescriptionEl.style.width = containerWidth + 'px'
+    infoDescriptionEl.style.marginLeft = container.style.marginLeft
+  }
+  
+  function centerScarab(container) {
+    var containerWidth = container.offsetWidth
+    var offsetMargin = -1 * containerWidth / 2
+    container.style.marginLeft = offsetMargin + 'px'
+  }
+  
   var MapzenScarab = function (options) {
     // nifty JS constructor pattern via browserify documentation
     // https://github.com/substack/browserify-handbook#reusable-components
@@ -168,15 +227,26 @@ var MapzenScarab = (function () {
     this.el = _createElsAndAppend()
     this.twitterEl = this.el.querySelector('.mz-bug-twitter-link')
     this.facebookEl = this.el.querySelector('.mz-bug-facebook-link')
-
+    
+    centerScarab(this.el);
+    window.addEventListener('resize', function(event) {
+      centerScarab(this.el)
+    }.bind(this))
+    
     // Build links
     this.rebuildLinks()
-
     // Rebuild links if hash changes
     window.onhashchange = function () {
       this.rebuildLinks()
     }.bind(this)
-
+    
+    if (opts.description) {
+      infoDescriptionEl = _buildDescription('description', this.el)
+      window.addEventListener('resize', function(event) {
+        resizeDescription(this.el)
+      }.bind(this))
+    }
+    
     // Check if Google Analytics is present soon in the future; if not, load it.
     window.setTimeout(function () {
       if (typeof ga === 'undefined') {
