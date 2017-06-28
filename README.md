@@ -36,7 +36,8 @@ var scarab = new MapzenScarab({
   name: 'Tangram',
   link: 'https://mapzen.com/projects/',
   tweet: 'Wow, what a cool WebGL map renderer by @mapzen!',
-  repo: 'https://github.com/tangrams/tangram/'
+  repo: 'https://github.com/tangrams/tangram/',
+  description: 'Here is a description of this scene!'
 });
 ```
 
@@ -49,7 +50,8 @@ key       | default value         | description
 __link__  | 'https://mapzen.com/' | _String._ URL to go to when viewer clicks on the Mapzen logo. This should be a valid absolute URL.
 __name__  | 'Mapzen demo'         | _String._ Name of the demo or product. This will be used in analytics tracking and pre-populating tweets.
 __tweet__ | (depends)             | _String._ Set a custom pre-written tweet message. The current URL of the page will be automatically appended to the end of the message. If not included, a default tweet (based on the _name_ option, if provided) will be used. ([see below](#twitter))
-__repo__  | 'https://github.com/mapzen/' | _String._ URL to source code repository. This should be a valid absolute URL. The logo is the GitHub logo but it won't magically prepend the GitHub domain for you.
+__repo__  | (none)                | _String._ URL to source code repository. This should be a valid absolute URL. The logo is the GitHub logo but it won't magically prepend the GitHub domain for you. This button only appears if a URL is provided.
+__description__ | (none)          | _String._ A text description of the scene. This button only appears if a description is provided. When clicked, the button displays a popup box below the scarab.
 
 
 ### Advanced options
