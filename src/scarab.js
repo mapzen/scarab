@@ -182,10 +182,10 @@ var MapzenScarab = (function () {
   // If no description provided, do not open description box
   function _onClickInfo(event) {
     var elem = infoDescriptionEl
-    if (elem.style.display === 'none') {
-        elem.style.display = 'block'
+    if (elem.style.display === 'block') {
+      elem.style.display = 'none'
     } else {
-        elem.style.display = 'none'
+      elem.style.display = 'block'
     }
   }
 
